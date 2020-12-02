@@ -1,17 +1,22 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.26124.0
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30711.63
 MinimumVisualStudioVersion = 15.0.26124.0
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{58528667-4EEE-4E68-850B-7B38F6F39319}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProyectoUME.Core", "src\ProyectoUME.Core\ProyectoUME.Core.csproj", "{D9CDEFA5-2067-476A-93E0-242D6F28716B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProyectoUME.Core", "src\ProyectoUME.Core\ProyectoUME.Core.csproj", "{D9CDEFA5-2067-476A-93E0-242D6F28716B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProyectoUME.Infrastructure", "src\ProyectoUME.Infrastructure\ProyectoUME.Infrastructure.csproj", "{106F3724-3871-4ABD-AAF5-AD23E5137A92}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProyectoUME.Infrastructure", "src\ProyectoUME.Infrastructure\ProyectoUME.Infrastructure.csproj", "{106F3724-3871-4ABD-AAF5-AD23E5137A92}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProyectoUME.Web", "src\ProyectoUME.Web\ProyectoUME.Web.csproj", "{1C058E3A-0E72-4FCE-A253-8B8C992B974C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProyectoUME.Web", "src\ProyectoUME.Web\ProyectoUME.Web.csproj", "{1C058E3A-0E72-4FCE-A253-8B8C992B974C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebIdentity", "WebIdentity\WebIdentity.csproj", "{225D0813-64A2-4B15-A3F7-DF33688BC7B8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebIdentity", "WebIdentity\WebIdentity.csproj", "{225D0813-64A2-4B15-A3F7-DF33688BC7B8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BD", "BD", "{B7312BF2-DFE9-4962-A966-67665F5927B3}"
+	ProjectSection(SolutionItems) = preProject
+		..\Downloads\proyecto_ume.sql = ..\Downloads\proyecto_ume.sql
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,9 +26,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 		Release|x64 = Release|x64
 		Release|x86 = Release|x86
-	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{D9CDEFA5-2067-476A-93E0-242D6F28716B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -75,9 +77,15 @@ Global
 		{225D0813-64A2-4B15-A3F7-DF33688BC7B8}.Release|x86.ActiveCfg = Release|Any CPU
 		{225D0813-64A2-4B15-A3F7-DF33688BC7B8}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{D9CDEFA5-2067-476A-93E0-242D6F28716B} = {58528667-4EEE-4E68-850B-7B38F6F39319}
 		{106F3724-3871-4ABD-AAF5-AD23E5137A92} = {58528667-4EEE-4E68-850B-7B38F6F39319}
 		{1C058E3A-0E72-4FCE-A253-8B8C992B974C} = {58528667-4EEE-4E68-850B-7B38F6F39319}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {CD18B362-6800-4D9F-B635-A73C7E09F7BA}
 	EndGlobalSection
 EndGlobal

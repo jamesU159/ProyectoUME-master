@@ -1003,3 +1003,8 @@ C:\Users\jauvs\ProyectoUME-master\src\ProyectoUME.Web\obj\Debug\netcoreapp3.1\Ra
 C:\Users\jauvs\ProyectoUME-master\src\ProyectoUME.Web\obj\Debug\netcoreapp3.1\Razor\Views\Proyecto\Details.cshtml.g.cs
 C:\Users\jauvs\ProyectoUME-master\src\ProyectoUME.Web\obj\Debug\netcoreapp3.1\Razor\Views\Proyecto\Edit.cshtml.g.cs
 C:\Users\jauvs\ProyectoUME-master\src\ProyectoUME.Web\obj\Debug\netcoreapp3.1\Razor\Views\Proyecto\Index.cshtml.g.cs
+C:\Users\jauvs\ProyectoUME-master\src\ProyectoUME.Web\obj\Debug\netcoreapp3.1\Razor\Views\TurnoLaboral\Create.cshtml.g.cs
+C:\Users\jauvs\ProyectoUME-master\src\ProyectoUME.Web\obj\Debug\netcoreapp3.1\Razor\Views\TurnoLaboral\Delete.cshtml.g.cs
+C:\Users\jauvs\ProyectoUME-master\src\ProyectoUME.Web\obj\Debug\netcoreapp3.1\Razor\Views\TurnoLaboral\Details.cshtml.g.cs
+C:\Users\jauvs\ProyectoUME-master\src\ProyectoUME.Web\obj\Debug\netcoreapp3.1\Razor\Views\TurnoLaboral\Edit.cshtml.g.cs
+C:\Users\jauvs\ProyectoUME-master\src\ProyectoUME.Web\obj\Debug\netcoreapp3.1\Razor\Views\TurnoLaboral\Index.cshtml.g.cs
