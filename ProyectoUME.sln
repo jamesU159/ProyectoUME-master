@@ -13,11 +13,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProyectoUME.Web", "src\Proy
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebIdentity", "WebIdentity\WebIdentity.csproj", "{225D0813-64A2-4B15-A3F7-DF33688BC7B8}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BD", "BD", "{B7312BF2-DFE9-4962-A966-67665F5927B3}"
-	ProjectSection(SolutionItems) = preProject
-		..\Downloads\proyecto_ume.sql = ..\Downloads\proyecto_ume.sql
-	EndProjectSection
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
