@@ -13,5 +13,8 @@ namespace ProyectoUME.Core.Domain
         public string Apellodo2 { get; set; }
         public string Correo { get; set; }
         public string Telefono { get; set; }
+        public int IdUsuarios { get; set; }
+
+        public virtual Usuario IdUsuariosNavigation { get; set; }
     }
 }

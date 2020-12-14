@@ -29,7 +29,6 @@ namespace ProyectoUME.Infrastructure.Data
         public virtual DbSet<Excusa> Excusa { get; set; }
         public virtual DbSet<IdentityuserString> IdentityuserString { get; set; }
         public virtual DbSet<Jornada> Jornada { get; set; }
-        public virtual DbSet<ListaEmpleados> ListaEmpleados { get; set; }
         public virtual DbSet<Permiso> Permiso { get; set; }
         public virtual DbSet<Proyecto> Proyecto { get; set; }
         public virtual DbSet<TurnoLaboral> TurnoLaboral { get; set; }
@@ -40,7 +39,7 @@ namespace ProyectoUME.Infrastructure.Data
 //            if (!optionsBuilder.IsConfigured)
 //            {
 //#warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-//                optionsBuilder.UseMySQL("database=proyecto ume;server=localhost;port=3306;user id=root;password=");
+//                optionsBuilder.UseMySql("database=\"proyecto ume\";server=localhost;port=3306;user id=root", x => x.ServerVersion("10.4.14-mariadb"));
 //            }
         }
 
@@ -55,13 +54,21 @@ namespace ProyectoUME.Infrastructure.Data
 
                 entity.Property(e => e.Id).HasColumnType("int(11)");
 
-                entity.Property(e => e.ClaimType).HasDefaultValueSql("'NULL'");
+                entity.Property(e => e.ClaimType)
+                    .HasColumnType("text")
+                    .HasCharSet("utf8")
+                    .HasCollation("utf8_general_ci");
 
-                entity.Property(e => e.ClaimValue).HasDefaultValueSql("'NULL'");
+                entity.Property(e => e.ClaimValue)
+                    .HasColumnType("text")
+                    .HasCharSet("utf8")
+                    .HasCollation("utf8_general_ci");
 
                 entity.Property(e => e.RoleId)
                     .IsRequired()
-                    .HasMaxLength(127);
+                    .HasColumnType("varchar(127)")
+                    .HasCharSet("utf8")
+                    .HasCollation("utf8_general_ci");
 
                 entity.HasOne(d => d.Role)
                     .WithMany(p => p.Aspnetroleclaims)
@@ -77,19 +84,25 @@ namespace ProyectoUME.Infrastructure.Data
                     .HasName("RoleNameIndex")
                     .IsUnique();
 
-                entity.Property(e => e.Id).HasMaxLength(127);
+                entity.Property(e => e.Id)
+                    .HasColumnType("varchar(127)")
+                    .HasCharSet("utf8")
+                    .HasCollation("utf8_general_ci");
 
                 entity.Property(e => e.ConcurrencyStamp)
-                    .HasMaxLength(256)
-                    .HasDefaultValueSql("'NULL'");
+                    .HasColumnType("varchar(256)")
+                    .HasCharSet("utf8")
+                    .HasCollation("utf8_general_ci");
 
                 entity.Property(e => e.Name)
-                    .HasMaxLength(256)
-                    .HasDefaultValueSql("'NULL'");
+                    .HasColumnType("varchar(256)")
+                    .HasCharSet("utf8")
+                    .HasCollation("utf8_general_ci");
 
                 entity.Property(e => e.NormalizedName)
-                    .HasMaxLength(256)
-                    .HasDefaultValueSql("'NULL'");
+                    .HasColumnType("varchar(256)")
+                    .HasCharSet("utf8")
+                    .HasCollation("utf8_general_ci");
             });
 
             modelBuilder.Entity<Aspnetuserclaims>(entity =>
@@ -101,11 +114,21 @@ namespace ProyectoUME.Infrastructure.Data
 
                 entity.Property(e => e.Id).HasColumnType("int(11)");
 
-                entity.Property(e => e.ClaimType).HasDefaultValueSql("'NULL'");
+                entity.Property(e => e.ClaimType)
+                    .HasColumnType("text")
+                    .HasCharSet("utf8")
+                    .HasCollation("utf8_general_ci");
 
-                entity.Property(e => e.ClaimValue).HasDefaultValueSql("'NULL'");
+                entity.Property(e => e.ClaimValue)
+                    .HasColumnType("text")
+                    .HasCharSet("utf8")
+                    .HasCollation("utf8_general_ci");
 
-                entity.Property(e => e.UserId).IsRequired();
+                entity.Property(e => e.UserId)
+                    .IsRequired()
+                    .HasColumnType("varchar(767)")
+                    .HasCharSet("utf8")
+                    .HasCollation("utf8_general_ci");
 
                 entity.HasOne(d => d.User)
                     .WithMany(p => p.Aspnetuserclaims)
@@ -116,20 +139,34 @@ namespace ProyectoUME.Infrastructure.Data
             modelBuilder.Entity<Aspnetuserlogins>(entity =>
             {
                 entity.HasKey(e => new { e.LoginProvider, e.ProviderKey })
-                    .HasName("PRIMARY");
+                    .HasName("PRIMARY")
+                    .HasAnnotation("MySql:IndexPrefixLength", new[] { 0, 0 });
 
                 entity.ToTable("aspnetuserlogins");
 
                 entity.HasIndex(e => e.UserId)
                     .HasName("IX_AspNetUserLogins_UserId");
 
-                entity.Property(e => e.LoginProvider).HasMaxLength(127);
+                entity.Property(e => e.LoginProvider)
+                    .HasColumnType("varchar(127)")
+                    .HasCharSet("utf8")
+                    .HasCollation("utf8_general_ci");
 
-                entity.Property(e => e.ProviderKey).HasMaxLength(127);
+                entity.Property(e => e.ProviderKey)
+                    .HasColumnType("varchar(127)")
+                    .HasCharSet("utf8")
+                    .HasCollation("utf8_general_ci");
 
-                entity.Property(e => e.ProviderDisplayName).HasDefaultValueSql("'NULL'");
+                entity.Property(e => e.ProviderDisplayName)
+                    .HasColumnType("text")
+                    .HasCharSet("utf8")
+                    .HasCollation("utf8_general_ci");
 
-                entity.Property(e => e.UserId).IsRequired();
+                entity.Property(e => e.UserId)
+                    .IsRequired()
+                    .HasColumnType("varchar(767)")
+                    .HasCharSet("utf8")
+                    .HasCollation("utf8_general_ci");
 
                 entity.HasOne(d => d.User)
                     .WithMany(p => p.Aspnetuserlogins)
@@ -140,16 +177,23 @@ namespace ProyectoUME.Infrastructure.Data
             modelBuilder.Entity<Aspnetuserroles>(entity =>
             {
                 entity.HasKey(e => new { e.UserId, e.RoleId })
-                    .HasName("PRIMARY");
+                    .HasName("PRIMARY")
+                    .HasAnnotation("MySql:IndexPrefixLength", new[] { 0, 0 });
 
                 entity.ToTable("aspnetuserroles");
 
                 entity.HasIndex(e => e.RoleId)
                     .HasName("IX_AspNetUserRoles_RoleId");
 
-                entity.Property(e => e.UserId).HasMaxLength(127);
+                entity.Property(e => e.UserId)
+                    .HasColumnType("varchar(127)")
+                    .HasCharSet("utf8")
+                    .HasCollation("utf8_general_ci");
 
-                entity.Property(e => e.RoleId).HasMaxLength(127);
+                entity.Property(e => e.RoleId)
+                    .HasColumnType("varchar(127)")
+                    .HasCharSet("utf8")
+                    .HasCollation("utf8_general_ci");
 
                 entity.HasOne(d => d.Role)
                     .WithMany(p => p.Aspnetuserroles)
@@ -173,47 +217,83 @@ namespace ProyectoUME.Infrastructure.Data
                     .HasName("UserNameIndex")
                     .IsUnique();
 
+                entity.Property(e => e.Id)
+                    .HasColumnType("varchar(767)")
+                    .HasCharSet("utf8")
+                    .HasCollation("utf8_general_ci");
+
                 entity.Property(e => e.AccessFailedCount).HasColumnType("int(11)");
 
-                entity.Property(e => e.ConcurrencyStamp).HasDefaultValueSql("'NULL'");
+                entity.Property(e => e.ConcurrencyStamp)
+                    .HasColumnType("text")
+                    .HasCharSet("utf8")
+                    .HasCollation("utf8_general_ci");
 
                 entity.Property(e => e.Email)
-                    .HasMaxLength(256)
-                    .HasDefaultValueSql("'NULL'");
+                    .HasColumnType("varchar(256)")
+                    .HasCharSet("utf8")
+                    .HasCollation("utf8_general_ci");
+
+                entity.Property(e => e.LockoutEnd).HasColumnType("timestamp");
 
                 entity.Property(e => e.NormalizedEmail)
-                    .HasMaxLength(256)
-                    .HasDefaultValueSql("'NULL'");
+                    .HasColumnType("varchar(256)")
+                    .HasCharSet("utf8")
+                    .HasCollation("utf8_general_ci");
 
                 entity.Property(e => e.NormalizedUserName)
-                    .HasMaxLength(256)
-                    .HasDefaultValueSql("'NULL'");
+                    .HasColumnType("varchar(256)")
+                    .HasCharSet("utf8")
+                    .HasCollation("utf8_general_ci");
 
-                entity.Property(e => e.PasswordHash).HasDefaultValueSql("'NULL'");
+                entity.Property(e => e.PasswordHash)
+                    .HasColumnType("text")
+                    .HasCharSet("utf8")
+                    .HasCollation("utf8_general_ci");
 
-                entity.Property(e => e.PhoneNumber).HasDefaultValueSql("'NULL'");
+                entity.Property(e => e.PhoneNumber)
+                    .HasColumnType("text")
+                    .HasCharSet("utf8")
+                    .HasCollation("utf8_general_ci");
 
-                entity.Property(e => e.SecurityStamp).HasDefaultValueSql("'NULL'");
+                entity.Property(e => e.SecurityStamp)
+                    .HasColumnType("text")
+                    .HasCharSet("utf8")
+                    .HasCollation("utf8_general_ci");
 
                 entity.Property(e => e.UserName)
-                    .HasMaxLength(256)
-                    .HasDefaultValueSql("'NULL'");
+                    .HasColumnType("varchar(256)")
+                    .HasCharSet("utf8")
+                    .HasCollation("utf8_general_ci");
             });
 
             modelBuilder.Entity<Aspnetusertokens>(entity =>
             {
                 entity.HasKey(e => new { e.UserId, e.LoginProvider, e.Name })
-                    .HasName("PRIMARY");
+                    .HasName("PRIMARY")
+                    .HasAnnotation("MySql:IndexPrefixLength", new[] { 0, 0, 0 });
 
                 entity.ToTable("aspnetusertokens");
 
-                entity.Property(e => e.UserId).HasMaxLength(127);
+                entity.Property(e => e.UserId)
+                    .HasColumnType("varchar(127)")
+                    .HasCharSet("utf8")
+                    .HasCollation("utf8_general_ci");
 
-                entity.Property(e => e.LoginProvider).HasMaxLength(127);
+                entity.Property(e => e.LoginProvider)
+                    .HasColumnType("varchar(127)")
+                    .HasCharSet("utf8")
+                    .HasCollation("utf8_general_ci");
 
-                entity.Property(e => e.Name).HasMaxLength(127);
+                entity.Property(e => e.Name)
+                    .HasColumnType("varchar(127)")
+                    .HasCharSet("utf8")
+                    .HasCollation("utf8_general_ci");
 
-                entity.Property(e => e.Value).HasDefaultValueSql("'NULL'");
+                entity.Property(e => e.Value)
+                    .HasColumnType("text")
+                    .HasCharSet("utf8")
+                    .HasCollation("utf8_general_ci");
 
                 entity.HasOne(d => d.User)
                     .WithMany(p => p.Aspnetusertokens)
@@ -235,33 +315,39 @@ namespace ProyectoUME.Infrastructure.Data
 
                 entity.Property(e => e.CertificadoArl)
                     .HasColumnName("Certificado_ARL")
-                    .HasMaxLength(2)
-                    .HasDefaultValueSql("'NULL'");
+                    .HasColumnType("varchar(2)")
+                    .HasCharSet("utf8")
+                    .HasCollation("utf8_general_ci");
 
                 entity.Property(e => e.CertificadoEps)
                     .HasColumnName("Certificado_EPS")
-                    .HasMaxLength(2)
-                    .HasDefaultValueSql("'NULL'");
+                    .HasColumnType("varchar(2)")
+                    .HasCharSet("utf8")
+                    .HasCollation("utf8_general_ci");
 
                 entity.Property(e => e.CertificadoPension)
                     .HasColumnName("Certificado_Pension")
-                    .HasMaxLength(2)
-                    .HasDefaultValueSql("'NULL'");
+                    .HasColumnType("varchar(2)")
+                    .HasCharSet("utf8")
+                    .HasCollation("utf8_general_ci");
 
                 entity.Property(e => e.CursoAlturas)
                     .HasColumnName("Curso_alturas")
-                    .HasMaxLength(2)
-                    .HasDefaultValueSql("'NULL'");
+                    .HasColumnType("varchar(2)")
+                    .HasCharSet("utf8")
+                    .HasCollation("utf8_general_ci");
+
+                entity.Property(e => e.Fecha).HasColumnType("datetime");
 
                 entity.Property(e => e.HojaVida)
                     .HasColumnName("Hoja_Vida")
-                    .HasMaxLength(2)
-                    .HasDefaultValueSql("'NULL'");
+                    .HasColumnType("varchar(2)")
+                    .HasCharSet("utf8")
+                    .HasCollation("utf8_general_ci");
 
                 entity.HasOne(d => d.IdTramiteNavigation)
                     .WithOne(p => p.Documentos)
                     .HasForeignKey<Documentos>(d => d.IdTramite)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("fk_IdTramite_IdUsuario");
             });
 
@@ -272,11 +358,16 @@ namespace ProyectoUME.Infrastructure.Data
 
                 entity.ToTable("__efmigrationshistory");
 
-                entity.Property(e => e.MigrationId).HasMaxLength(150);
+                entity.Property(e => e.MigrationId)
+                    .HasColumnType("varchar(150)")
+                    .HasCharSet("utf8")
+                    .HasCollation("utf8_general_ci");
 
                 entity.Property(e => e.ProductVersion)
                     .IsRequired()
-                    .HasMaxLength(32);
+                    .HasColumnType("varchar(32)")
+                    .HasCharSet("utf8")
+                    .HasCollation("utf8_general_ci");
             });
 
             modelBuilder.Entity<Empresa>(entity =>
@@ -288,24 +379,33 @@ namespace ProyectoUME.Infrastructure.Data
 
                 entity.Property(e => e.Nit)
                     .HasColumnName("NIT")
-                    .HasColumnType("int(11)");
+                    .HasColumnType("int(11)")
+                    .ValueGeneratedNever();
 
                 entity.Property(e => e.Ciudad)
                     .IsRequired()
-                    .HasMaxLength(15);
+                    .HasColumnType("varchar(15)")
+                    .HasCharSet("utf8")
+                    .HasCollation("utf8_general_ci");
 
                 entity.Property(e => e.Direccion)
                     .IsRequired()
-                    .HasMaxLength(30);
+                    .HasColumnType("varchar(30)")
+                    .HasCharSet("utf8")
+                    .HasCollation("utf8_general_ci");
 
                 entity.Property(e => e.NombreEmpresa)
                     .IsRequired()
                     .HasColumnName("Nombre_Empresa")
-                    .HasMaxLength(20);
+                    .HasColumnType("varchar(20)")
+                    .HasCharSet("utf8")
+                    .HasCollation("utf8_general_ci");
 
                 entity.Property(e => e.Telefono)
                     .IsRequired()
-                    .HasMaxLength(45);
+                    .HasColumnType("varchar(45)")
+                    .HasCharSet("utf8")
+                    .HasCollation("utf8_general_ci");
             });
 
             modelBuilder.Entity<Excusa>(entity =>
@@ -315,6 +415,9 @@ namespace ProyectoUME.Infrastructure.Data
 
                 entity.ToTable("excusa");
 
+                entity.HasIndex(e => e.IdUsuarios)
+                    .HasName("fk_excusas_usuarios");
+
                 entity.Property(e => e.IdExcusa)
                     .HasColumnName("idExcusa")
                     .HasColumnType("int(11)");
@@ -322,56 +425,102 @@ namespace ProyectoUME.Infrastructure.Data
                 entity.Property(e => e.AnexoEvidencia)
                     .IsRequired()
                     .HasColumnName("Anexo_Evidencia")
-                    .HasMaxLength(2);
+                    .HasColumnType("varchar(2)")
+                    .HasCharSet("utf8")
+                    .HasCollation("utf8_general_ci");
 
                 entity.Property(e => e.Apellido1)
-                    .HasMaxLength(20)
-                    .HasDefaultValueSql("'NULL'");
+                    .HasColumnType("varchar(20)")
+                    .HasCharSet("utf8")
+                    .HasCollation("utf8_general_ci");
 
                 entity.Property(e => e.Apellodo2)
-                    .HasMaxLength(20)
-                    .HasDefaultValueSql("'NULL'");
+                    .HasColumnType("varchar(20)")
+                    .HasCharSet("utf8")
+                    .HasCollation("utf8_general_ci");
 
                 entity.Property(e => e.Correo)
-                    .HasMaxLength(25)
-                    .HasDefaultValueSql("'NULL'");
+                    .HasColumnType("varchar(25)")
+                    .HasCharSet("utf8")
+                    .HasCollation("utf8_general_ci");
+
+                entity.Property(e => e.IdUsuarios)
+                    .HasColumnName("idUsuarios")
+                    .HasColumnType("int(11)");
 
                 entity.Property(e => e.Nombre1)
-                    .HasMaxLength(10)
-                    .HasDefaultValueSql("'NULL'");
+                    .HasColumnType("varchar(10)")
+                    .HasCharSet("utf8")
+                    .HasCollation("utf8_general_ci");
 
                 entity.Property(e => e.Nombre2)
-                    .HasMaxLength(10)
-                    .HasDefaultValueSql("'NULL'");
+                    .HasColumnType("varchar(10)")
+                    .HasCharSet("utf8")
+                    .HasCollation("utf8_general_ci");
 
                 entity.Property(e => e.Telefono)
-                    .HasMaxLength(10)
-                    .HasDefaultValueSql("'NULL'");
+                    .HasColumnType("varchar(10)")
+                    .HasCharSet("utf8")
+                    .HasCollation("utf8_general_ci");
+
+                entity.HasOne(d => d.IdUsuariosNavigation)
+                    .WithMany(p => p.Excusa)
+                    .HasForeignKey(d => d.IdUsuarios)
+                    .HasConstraintName("fk_excusas_usuarios");
             });
 
             modelBuilder.Entity<IdentityuserString>(entity =>
             {
                 entity.ToTable("identityuser<string>");
 
-                entity.Property(e => e.Id).HasMaxLength(127);
+                entity.Property(e => e.Id)
+                    .HasColumnType("varchar(127)")
+                    .HasCharSet("utf8")
+                    .HasCollation("utf8_general_ci");
 
                 entity.Property(e => e.AccessFailedCount).HasColumnType("int(11)");
 
-                entity.Property(e => e.ConcurrencyStamp).HasDefaultValueSql("'NULL'");
+                entity.Property(e => e.ConcurrencyStamp)
+                    .HasColumnType("text")
+                    .HasCharSet("utf8")
+                    .HasCollation("utf8_general_ci");
 
-                entity.Property(e => e.Email).HasDefaultValueSql("'NULL'");
+                entity.Property(e => e.Email)
+                    .HasColumnType("text")
+                    .HasCharSet("utf8")
+                    .HasCollation("utf8_general_ci");
 
-                entity.Property(e => e.NormalizedEmail).HasDefaultValueSql("'NULL'");
+                entity.Property(e => e.LockoutEnd).HasColumnType("timestamp");
 
-                entity.Property(e => e.NormalizedUserName).HasDefaultValueSql("'NULL'");
+                entity.Property(e => e.NormalizedEmail)
+                    .HasColumnType("text")
+                    .HasCharSet("utf8")
+                    .HasCollation("utf8_general_ci");
 
-                entity.Property(e => e.PasswordHash).HasDefaultValueSql("'NULL'");
+                entity.Property(e => e.NormalizedUserName)
+                    .HasColumnType("text")
+                    .HasCharSet("utf8")
+                    .HasCollation("utf8_general_ci");
 
-                entity.Property(e => e.PhoneNumber).HasDefaultValueSql("'NULL'");
+                entity.Property(e => e.PasswordHash)
+                    .HasColumnType("text")
+                    .HasCharSet("utf8")
+                    .HasCollation("utf8_general_ci");
 
-                entity.Property(e => e.SecurityStamp).HasDefaultValueSql("'NULL'");
+                entity.Property(e => e.PhoneNumber)
+                    .HasColumnType("text")
+                    .HasCharSet("utf8")
+                    .HasCollation("utf8_general_ci");
 
-                entity.Property(e => e.UserName).HasDefaultValueSql("'NULL'");
+                entity.Property(e => e.SecurityStamp)
+                    .HasColumnType("text")
+                    .HasCharSet("utf8")
+                    .HasCollation("utf8_general_ci");
+
+                entity.Property(e => e.UserName)
+                    .HasColumnType("text")
+                    .HasCharSet("utf8")
+                    .HasCollation("utf8_general_ci");
             });
 
             modelBuilder.Entity<Jornada>(entity =>
@@ -383,37 +532,14 @@ namespace ProyectoUME.Infrastructure.Data
 
                 entity.Property(e => e.IdJornada)
                     .HasColumnName("idJornada")
-                    .HasColumnType("int(11)");
+                    .HasColumnType("int(11)")
+                    .ValueGeneratedNever();
 
                 entity.Property(e => e.Jornada1)
                     .HasColumnName("Jornada")
-                    .HasMaxLength(10)
-                    .HasDefaultValueSql("'NULL'");
-            });
-
-            modelBuilder.Entity<ListaEmpleados>(entity =>
-            {
-                entity.HasKey(e => e.IdListaEmpleados)
-                    .HasName("PRIMARY");
-
-                entity.ToTable("lista_empleados");
-
-                entity.HasIndex(e => e.ProyectoIdProyecto)
-                    .HasName("fk_Lista_empleados_Proyecto1_idx");
-
-                entity.Property(e => e.IdListaEmpleados)
-                    .HasColumnName("idLista_empleados")
-                    .HasColumnType("int(11)");
-
-                entity.Property(e => e.ProyectoIdProyecto)
-                    .HasColumnName("Proyecto_idProyecto")
-                    .HasColumnType("int(11)");
-
-                entity.HasOne(d => d.ProyectoIdProyectoNavigation)
-                    .WithMany(p => p.ListaEmpleados)
-                    .HasForeignKey(d => d.ProyectoIdProyecto)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("fk_Lista_empleados_Proyecto1");
+                    .HasColumnType("varchar(10)")
+                    .HasCharSet("utf8")
+                    .HasCollation("utf8_general_ci");
             });
 
             modelBuilder.Entity<Permiso>(entity =>
@@ -423,33 +549,57 @@ namespace ProyectoUME.Infrastructure.Data
 
                 entity.ToTable("permiso");
 
+                entity.HasIndex(e => e.IdUsuario)
+                    .HasName("fk_Permiso_usuarios");
+
                 entity.Property(e => e.IdPermiso)
                     .HasColumnName("idPermiso")
                     .HasColumnType("int(11)");
 
                 entity.Property(e => e.Apellido1)
                     .IsRequired()
-                    .HasMaxLength(20);
+                    .HasColumnType("varchar(20)")
+                    .HasCharSet("utf8")
+                    .HasCollation("utf8_general_ci");
 
                 entity.Property(e => e.Apellido2)
                     .IsRequired()
-                    .HasMaxLength(20);
+                    .HasColumnType("varchar(20)")
+                    .HasCharSet("utf8")
+                    .HasCollation("utf8_general_ci");
 
                 entity.Property(e => e.Correo)
                     .IsRequired()
-                    .HasMaxLength(25);
+                    .HasColumnType("varchar(25)")
+                    .HasCharSet("utf8")
+                    .HasCollation("utf8_general_ci");
+
+                entity.Property(e => e.IdUsuario)
+                    .HasColumnName("idUsuario")
+                    .HasColumnType("int(11)");
 
                 entity.Property(e => e.Nombre1)
                     .IsRequired()
-                    .HasMaxLength(10);
+                    .HasColumnType("varchar(10)")
+                    .HasCharSet("utf8")
+                    .HasCollation("utf8_general_ci");
 
                 entity.Property(e => e.Nombre2)
                     .IsRequired()
-                    .HasMaxLength(10);
+                    .HasColumnType("varchar(10)")
+                    .HasCharSet("utf8")
+                    .HasCollation("utf8_general_ci");
 
                 entity.Property(e => e.Telefono)
                     .IsRequired()
-                    .HasMaxLength(10);
+                    .HasColumnType("varchar(10)")
+                    .HasCharSet("utf8")
+                    .HasCollation("utf8_general_ci");
+
+                entity.HasOne(d => d.IdUsuarioNavigation)
+                    .WithMany(p => p.Permiso)
+                    .HasForeignKey(d => d.IdUsuario)
+                    .HasConstraintName("fk_Permiso_usuarios");
             });
 
             modelBuilder.Entity<Proyecto>(entity =>
@@ -466,7 +616,9 @@ namespace ProyectoUME.Infrastructure.Data
                 entity.Property(e => e.DireccionPoyecto)
                     .IsRequired()
                     .HasColumnName("Direccion_Poyecto")
-                    .HasMaxLength(30);
+                    .HasColumnType("varchar(30)")
+                    .HasCharSet("utf8")
+                    .HasCollation("utf8_general_ci");
 
                 entity.Property(e => e.NumeroEmpleados)
                     .HasColumnName("Numero_Empleados")
@@ -475,7 +627,9 @@ namespace ProyectoUME.Infrastructure.Data
                 entity.Property(e => e.PersonaResponsable)
                     .IsRequired()
                     .HasColumnName("Persona_Responsable")
-                    .HasMaxLength(45);
+                    .HasColumnType("varchar(45)")
+                    .HasCharSet("utf8")
+                    .HasCollation("utf8_general_ci");
             });
 
             modelBuilder.Entity<TurnoLaboral>(entity =>
@@ -485,6 +639,9 @@ namespace ProyectoUME.Infrastructure.Data
 
                 entity.ToTable("turno_laboral");
 
+                entity.HasIndex(e => e.IdUsuario)
+                    .HasName("turno_laboral_ibfk_1");
+
                 entity.HasIndex(e => e.JornadaIdJornada)
                     .HasName("fk_Turno_Laboral_Jornada1_idx");
 
@@ -492,13 +649,26 @@ namespace ProyectoUME.Infrastructure.Data
                     .HasColumnName("idConsulta")
                     .HasColumnType("int(11)");
 
-                entity.Property(e => e.HoraIngreso).HasColumnName("Hora_Ingreso");
+                entity.Property(e => e.HoraIngreso)
+                    .HasColumnName("Hora_Ingreso")
+                    .HasColumnType("time");
 
-                entity.Property(e => e.HoraSalida).HasColumnName("Hora_Salida");
+                entity.Property(e => e.HoraSalida)
+                    .HasColumnName("Hora_Salida")
+                    .HasColumnType("time");
+
+                entity.Property(e => e.IdUsuario)
+                    .HasColumnName("idUsuario")
+                    .HasColumnType("int(11)");
 
                 entity.Property(e => e.JornadaIdJornada)
                     .HasColumnName("Jornada_idJornada")
                     .HasColumnType("int(11)");
+
+                entity.HasOne(d => d.IdUsuarioNavigation)
+                    .WithMany(p => p.TurnoLaboral)
+                    .HasForeignKey(d => d.IdUsuario)
+                    .HasConstraintName("turno_laboral_ibfk_1");
 
                 entity.HasOne(d => d.JornadaIdJornadaNavigation)
                     .WithMany(p => p.TurnoLaboral)
@@ -515,10 +685,16 @@ namespace ProyectoUME.Infrastructure.Data
                 entity.ToTable("usuario");
 
                 entity.HasIndex(e => e.AspnetusersId)
-                    .HasName("Aspnetusers_Id");
+                    .HasName("usuario_ibfk_1");
 
                 entity.HasIndex(e => e.EmpresaNit)
                     .HasName("fk_Usuario_Empresa_idx");
+
+                entity.HasIndex(e => e.IdProyecto)
+                    .HasName("fk_proyecto_usuario");
+
+                entity.HasIndex(e => e.Jornada)
+                    .HasName("fk_jornada_usuario");
 
                 entity.Property(e => e.IdUsuario)
                     .HasColumnName("idUsuario")
@@ -526,16 +702,11 @@ namespace ProyectoUME.Infrastructure.Data
 
                 entity.Property(e => e.AspnetusersId)
                     .HasColumnName("Aspnetusers_Id")
-                    .HasMaxLength(257)
-                    .HasDefaultValueSql("'NULL'");
+                    .HasColumnType("varchar(257)")
+                    .HasCharSet("utf8")
+                    .HasCollation("utf8_general_ci");
 
-                entity.Property(e => e.Contraseña)
-                    .HasMaxLength(20)
-                    .HasDefaultValueSql("'NULL'");
-
-                entity.Property(e => e.Correo)
-                    .IsRequired()
-                    .HasMaxLength(20);
+                entity.Property(e => e.Cedula).HasColumnType("int(10)");
 
                 entity.Property(e => e.Edad).HasColumnType("int(2)");
 
@@ -543,40 +714,68 @@ namespace ProyectoUME.Infrastructure.Data
                     .HasColumnName("Empresa_NIT")
                     .HasColumnType("int(11)");
 
+                entity.Property(e => e.IdProyecto)
+                    .HasColumnName("idProyecto")
+                    .HasColumnType("int(11)");
+
+                entity.Property(e => e.Jornada).HasColumnType("int(11)");
+
                 entity.Property(e => e.PrimerApellido)
                     .IsRequired()
                     .HasColumnName("Primer_Apellido")
-                    .HasMaxLength(25);
+                    .HasColumnType("varchar(25)")
+                    .HasCharSet("utf8")
+                    .HasCollation("utf8_general_ci");
 
                 entity.Property(e => e.PrimerNombre)
                     .IsRequired()
                     .HasColumnName("Primer_Nombre")
-                    .HasMaxLength(10);
+                    .HasColumnType("varchar(10)")
+                    .HasCharSet("utf8")
+                    .HasCollation("utf8_general_ci");
 
                 entity.Property(e => e.SegundoApellido)
                     .IsRequired()
                     .HasColumnName("Segundo_Apellido")
-                    .HasMaxLength(25);
+                    .HasColumnType("varchar(25)")
+                    .HasCharSet("utf8")
+                    .HasCollation("utf8_general_ci");
 
                 entity.Property(e => e.SegundoNombre)
                     .IsRequired()
                     .HasColumnName("Segundo_Nombre")
-                    .HasMaxLength(10);
+                    .HasColumnType("varchar(10)")
+                    .HasCharSet("utf8")
+                    .HasCollation("utf8_general_ci");
 
                 entity.Property(e => e.Telefono)
                     .IsRequired()
-                    .HasMaxLength(30);
+                    .HasColumnType("varchar(30)")
+                    .HasCharSet("utf8")
+                    .HasCollation("utf8_general_ci");
 
                 entity.HasOne(d => d.Aspnetusers)
                     .WithMany(p => p.Usuario)
                     .HasForeignKey(d => d.AspnetusersId)
+                    .OnDelete(DeleteBehavior.Cascade)
                     .HasConstraintName("usuario_ibfk_1");
 
                 entity.HasOne(d => d.EmpresaNitNavigation)
                     .WithMany(p => p.Usuario)
                     .HasForeignKey(d => d.EmpresaNit)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .OnDelete(DeleteBehavior.Cascade)
                     .HasConstraintName("fk_Usuario_Empresa");
+
+                entity.HasOne(d => d.IdProyectoNavigation)
+                    .WithMany(p => p.Usuario)
+                    .HasForeignKey(d => d.IdProyecto)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("fk_proyecto_usuario");
+
+                entity.HasOne(d => d.JornadaNavigation)
+                    .WithMany(p => p.Usuario)
+                    .HasForeignKey(d => d.Jornada)
+                    .HasConstraintName("fk_jornada_usuario");
             });
 
             OnModelCreatingPartial(modelBuilder);

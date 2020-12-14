@@ -22,7 +22,8 @@ namespace ProyectoUME.Web.Controllers
         // GET: Excusa
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Excusa.ToListAsync());
+            var applicationDbContext = _context.Excusa.Include(e => e.IdUsuariosNavigation);
+            return View(await applicationDbContext.ToListAsync());
         }
 
         // GET: Excusa/Details/5
@@ -34,6 +35,7 @@ namespace ProyectoUME.Web.Controllers
             }
 
             var excusa = await _context.Excusa
+                .Include(e => e.IdUsuariosNavigation)
                 .FirstOrDefaultAsync(m => m.IdExcusa == id);
             if (excusa == null)
             {
@@ -46,6 +48,7 @@ namespace ProyectoUME.Web.Controllers
         // GET: Excusa/Create
         public IActionResult Create()
         {
+            ViewData["IdUsuarios"] = new SelectList(_context.Usuario, "IdUsuario", "PrimerApellido");
             return View();
         }
 
@@ -54,7 +57,7 @@ namespace ProyectoUME.Web.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("IdExcusa,AnexoEvidencia,Nombre1,Nombre2,Apellido1,Apellodo2,Correo,Telefono")] Excusa excusa)
+        public async Task<IActionResult> Create([Bind("IdExcusa,AnexoEvidencia,Nombre1,Nombre2,Apellido1,Apellodo2,Correo,Telefono,IdUsuarios")] Excusa excusa)
         {
             if (ModelState.IsValid)
             {
@@ -62,6 +65,7 @@ namespace ProyectoUME.Web.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["IdUsuarios"] = new SelectList(_context.Usuario, "IdUsuario", "PrimerApellido", excusa.IdUsuarios);
             return View(excusa);
         }
 
@@ -78,6 +82,7 @@ namespace ProyectoUME.Web.Controllers
             {
                 return NotFound();
             }
+            ViewData["IdUsuarios"] = new SelectList(_context.Usuario, "IdUsuario", "PrimerApellido", excusa.IdUsuarios);
             return View(excusa);
         }
 
@@ -86,7 +91,7 @@ namespace ProyectoUME.Web.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("IdExcusa,AnexoEvidencia,Nombre1,Nombre2,Apellido1,Apellodo2,Correo,Telefono")] Excusa excusa)
+        public async Task<IActionResult> Edit(int id, [Bind("IdExcusa,AnexoEvidencia,Nombre1,Nombre2,Apellido1,Apellodo2,Correo,Telefono,IdUsuarios")] Excusa excusa)
         {
             if (id != excusa.IdExcusa)
             {
@@ -113,6 +118,7 @@ namespace ProyectoUME.Web.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["IdUsuarios"] = new SelectList(_context.Usuario, "IdUsuario", "PrimerApellido", excusa.IdUsuarios);
             return View(excusa);
         }
 
@@ -125,6 +131,7 @@ namespace ProyectoUME.Web.Controllers
             }
 
             var excusa = await _context.Excusa
+                .Include(e => e.IdUsuariosNavigation)
                 .FirstOrDefaultAsync(m => m.IdExcusa == id);
             if (excusa == null)
             {

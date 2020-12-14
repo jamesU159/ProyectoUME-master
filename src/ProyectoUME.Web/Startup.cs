@@ -7,6 +7,8 @@ using Microsoft.EntityFrameworkCore;
 using ProyectoUME.Infrastruture.Identity;
 using Microsoft.AspNetCore.Identity;
 using ProyectoUME.Core;
+using ProyectoUME.Infrastructure;
+using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
 using ProyectoUME.Infrastructure.Data;
 
 namespace ProyectoUME.Web
@@ -24,10 +26,10 @@ namespace ProyectoUME.Web
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseMySQL(Configuration.GetConnectionString("proyectoConnection")));
+                options.UseMySql(Configuration.GetConnectionString("proyectoConnection")));
 
             services.AddDbContext<AppDbContext>(options =>
-                 options.UseMySQL(
+                 options.UseMySql(
                      Configuration.GetConnectionString("IdentityConnection")));
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<AppDbContext>();

@@ -26,7 +26,7 @@
                 @Html.DisplayNameFor(model => model.SegundoApellido)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Correo)
+                @Html.DisplayNameFor(model => model.Cedula)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Edad)
@@ -35,13 +35,16 @@
                 @Html.DisplayNameFor(model => model.Telefono)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Contraseña)
+                @Html.DisplayNameFor(model => model.Jornada)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Aspnetusers)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.EmpresaNitNavigation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdProyectoNavigation)
             </th>
             <th></th>
         </tr>
@@ -62,7 +65,7 @@
                 @Html.DisplayFor(modelItem => item.SegundoApellido)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Correo)
+                @Html.DisplayFor(modelItem => item.Cedula)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Edad)
@@ -71,13 +74,16 @@
                 @Html.DisplayFor(modelItem => item.Telefono)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Contraseña)
+                @Html.DisplayFor(modelItem => item.Jornada)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Aspnetusers.Id)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.EmpresaNitNavigation.Ciudad)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdProyectoNavigation.DireccionPoyecto)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.IdUsuario">Edit</a> |

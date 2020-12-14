@@ -48,7 +48,7 @@ namespace ProyectoUME.Web.Controllers
         // GET: Documento/Create
         public IActionResult Create()
         {
-            ViewData["IdTramite"] = new SelectList(_context.Usuario, "IdUsuario", "Correo");
+            ViewData["IdTramite"] = new SelectList(_context.Usuario, "IdUsuario", "PrimerApellido");
             return View();
         }
 
@@ -57,7 +57,7 @@ namespace ProyectoUME.Web.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("IdTramite,CursoAlturas,CertificadoEps,CertificadoArl,CertificadoPension,HojaVida")] Documentos documentos)
+        public async Task<IActionResult> Create([Bind("IdTramite,Fecha,CursoAlturas,CertificadoEps,CertificadoArl,CertificadoPension,HojaVida")] Documentos documentos)
         {
             if (ModelState.IsValid)
             {
@@ -65,7 +65,7 @@ namespace ProyectoUME.Web.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["IdTramite"] = new SelectList(_context.Usuario, "IdUsuario", "Correo", documentos.IdTramite);
+            ViewData["IdTramite"] = new SelectList(_context.Usuario, "IdUsuario", "PrimerApellido", documentos.IdTramite);
             return View(documentos);
         }
 
@@ -82,7 +82,7 @@ namespace ProyectoUME.Web.Controllers
             {
                 return NotFound();
             }
-            ViewData["IdTramite"] = new SelectList(_context.Usuario, "IdUsuario", "Correo", documentos.IdTramite);
+            ViewData["IdTramite"] = new SelectList(_context.Usuario, "IdUsuario", "PrimerApellido", documentos.IdTramite);
             return View(documentos);
         }
 
@@ -91,7 +91,7 @@ namespace ProyectoUME.Web.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("IdTramite,CursoAlturas,CertificadoEps,CertificadoArl,CertificadoPension,HojaVida")] Documentos documentos)
+        public async Task<IActionResult> Edit(int id, [Bind("IdTramite,Fecha,CursoAlturas,CertificadoEps,CertificadoArl,CertificadoPension,HojaVida")] Documentos documentos)
         {
             if (id != documentos.IdTramite)
             {
@@ -118,7 +118,7 @@ namespace ProyectoUME.Web.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["IdTramite"] = new SelectList(_context.Usuario, "IdUsuario", "Correo", documentos.IdTramite);
+            ViewData["IdTramite"] = new SelectList(_context.Usuario, "IdUsuario", "PrimerApellido", documentos.IdTramite);
             return View(documentos);
         }
 

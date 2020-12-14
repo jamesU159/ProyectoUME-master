@@ -34,9 +34,9 @@
                 <span asp-validation-for="SegundoApellido" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Correo" class="control-label"></label>
-                <input asp-for="Correo" class="form-control" />
-                <span asp-validation-for="Correo" class="text-danger"></span>
+                <label asp-for="Cedula" class="control-label"></label>
+                <input asp-for="Cedula" class="form-control" />
+                <span asp-validation-for="Cedula" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Edad" class="control-label"></label>
@@ -49,8 +49,21 @@
                 <span asp-validation-for="Telefono" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <label asp-for="Jornada" class="control-label"></label>
+                <input asp-for="Jornada" class="form-control" />
+                <span asp-validation-for="Jornada" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="IdProyecto" class="control-label"></label>
+                <select asp-for="IdProyecto" class ="form-control" asp-items="ViewBag.IdProyecto"></select>
+            </div>
+            <div class="form-group">
                 <label asp-for="EmpresaNit" class="control-label"></label>
                 <select asp-for="EmpresaNit" class ="form-control" asp-items="ViewBag.EmpresaNit"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="AspnetusersId" class="control-label"></label>
+                <select asp-for="AspnetusersId" class ="form-control" asp-items="ViewBag.AspnetusersId"></select>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />

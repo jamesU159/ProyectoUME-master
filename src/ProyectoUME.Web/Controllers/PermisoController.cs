@@ -22,7 +22,8 @@ namespace ProyectoUME.Web.Controllers
         // GET: Permiso
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Permiso.ToListAsync());
+            var applicationDbContext = _context.Permiso.Include(p => p.IdUsuarioNavigation);
+            return View(await applicationDbContext.ToListAsync());
         }
 
         // GET: Permiso/Details/5
@@ -34,6 +35,7 @@ namespace ProyectoUME.Web.Controllers
             }
 
             var permiso = await _context.Permiso
+                .Include(p => p.IdUsuarioNavigation)
                 .FirstOrDefaultAsync(m => m.IdPermiso == id);
             if (permiso == null)
             {
@@ -46,6 +48,7 @@ namespace ProyectoUME.Web.Controllers
         // GET: Permiso/Create
         public IActionResult Create()
         {
+            ViewData["IdUsuario"] = new SelectList(_context.Usuario, "IdUsuario", "PrimerApellido");
             return View();
         }
 
@@ -54,7 +57,7 @@ namespace ProyectoUME.Web.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("IdPermiso,Nombre1,Nombre2,Apellido1,Apellido2,Correo,Telefono")] Permiso permiso)
+        public async Task<IActionResult> Create([Bind("IdPermiso,Nombre1,Nombre2,Apellido1,Apellido2,Correo,Telefono,IdUsuario")] Permiso permiso)
         {
             if (ModelState.IsValid)
             {
@@ -62,6 +65,7 @@ namespace ProyectoUME.Web.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["IdUsuario"] = new SelectList(_context.Usuario, "IdUsuario", "PrimerApellido", permiso.IdUsuario);
             return View(permiso);
         }
 
@@ -78,6 +82,7 @@ namespace ProyectoUME.Web.Controllers
             {
                 return NotFound();
             }
+            ViewData["IdUsuario"] = new SelectList(_context.Usuario, "IdUsuario", "PrimerApellido", permiso.IdUsuario);
             return View(permiso);
         }
 
@@ -86,7 +91,7 @@ namespace ProyectoUME.Web.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("IdPermiso,Nombre1,Nombre2,Apellido1,Apellido2,Correo,Telefono")] Permiso permiso)
+        public async Task<IActionResult> Edit(int id, [Bind("IdPermiso,Nombre1,Nombre2,Apellido1,Apellido2,Correo,Telefono,IdUsuario")] Permiso permiso)
         {
             if (id != permiso.IdPermiso)
             {
@@ -113,6 +118,7 @@ namespace ProyectoUME.Web.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["IdUsuario"] = new SelectList(_context.Usuario, "IdUsuario", "PrimerApellido", permiso.IdUsuario);
             return View(permiso);
         }
 
@@ -125,6 +131,7 @@ namespace ProyectoUME.Web.Controllers
             }
 
             var permiso = await _context.Permiso
+                .Include(p => p.IdUsuarioNavigation)
                 .FirstOrDefaultAsync(m => m.IdPermiso == id);
             if (permiso == null)
             {

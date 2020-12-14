@@ -20,6 +20,9 @@
                 @Html.DisplayNameFor(model => model.HoraSalida)
             </th>
             <th>
+                @Html.DisplayNameFor(model => model.IdUsuarioNavigation)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.JornadaIdJornadaNavigation)
             </th>
             <th></th>
@@ -33,6 +36,9 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.HoraSalida)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdUsuarioNavigation.PrimerApellido)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.JornadaIdJornadaNavigation.IdJornada)

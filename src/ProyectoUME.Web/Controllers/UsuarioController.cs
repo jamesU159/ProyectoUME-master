@@ -22,7 +22,7 @@ namespace ProyectoUME.Web.Controllers
         // GET: Usuario
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Usuario.Include(u => u.Aspnetusers).Include(u => u.EmpresaNitNavigation);
+            var applicationDbContext = _context.Usuario.Include(u => u.Aspnetusers).Include(u => u.EmpresaNitNavigation).Include(u => u.IdProyectoNavigation);
             return View(await applicationDbContext.ToListAsync());
         }
 
@@ -37,6 +37,7 @@ namespace ProyectoUME.Web.Controllers
             var usuario = await _context.Usuario
                 .Include(u => u.Aspnetusers)
                 .Include(u => u.EmpresaNitNavigation)
+                .Include(u => u.IdProyectoNavigation)
                 .FirstOrDefaultAsync(m => m.IdUsuario == id);
             if (usuario == null)
             {
@@ -51,6 +52,7 @@ namespace ProyectoUME.Web.Controllers
         {
             ViewData["AspnetusersId"] = new SelectList(_context.Aspnetusers, "Id", "Id");
             ViewData["EmpresaNit"] = new SelectList(_context.Empresa, "Nit", "Ciudad");
+            ViewData["IdProyecto"] = new SelectList(_context.Proyecto, "IdProyecto", "DireccionPoyecto");
             return View();
         }
 
@@ -59,7 +61,7 @@ namespace ProyectoUME.Web.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("IdUsuario,PrimerNombre,SegundoNombre,PrimerApellido,SegundoApellido,Correo,Edad,Telefono,Contraseña,EmpresaNit,AspnetusersId")] Usuario usuario)
+        public async Task<IActionResult> Create([Bind("IdUsuario,PrimerNombre,SegundoNombre,PrimerApellido,SegundoApellido,Cedula,Edad,Telefono,Jornada,IdProyecto,EmpresaNit,AspnetusersId")] Usuario usuario)
         {
             if (ModelState.IsValid)
             {
@@ -69,6 +71,7 @@ namespace ProyectoUME.Web.Controllers
             }
             ViewData["AspnetusersId"] = new SelectList(_context.Aspnetusers, "Id", "Id", usuario.AspnetusersId);
             ViewData["EmpresaNit"] = new SelectList(_context.Empresa, "Nit", "Ciudad", usuario.EmpresaNit);
+            ViewData["IdProyecto"] = new SelectList(_context.Proyecto, "IdProyecto", "DireccionPoyecto", usuario.IdProyecto);
             return View(usuario);
         }
 
@@ -87,6 +90,7 @@ namespace ProyectoUME.Web.Controllers
             }
             ViewData["AspnetusersId"] = new SelectList(_context.Aspnetusers, "Id", "Id", usuario.AspnetusersId);
             ViewData["EmpresaNit"] = new SelectList(_context.Empresa, "Nit", "Ciudad", usuario.EmpresaNit);
+            ViewData["IdProyecto"] = new SelectList(_context.Proyecto, "IdProyecto", "DireccionPoyecto", usuario.IdProyecto);
             return View(usuario);
         }
 
@@ -95,7 +99,7 @@ namespace ProyectoUME.Web.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("IdUsuario,PrimerNombre,SegundoNombre,PrimerApellido,SegundoApellido,Correo,Edad,Telefono,Contraseña,EmpresaNit,AspnetusersId")] Usuario usuario)
+        public async Task<IActionResult> Edit(int id, [Bind("IdUsuario,PrimerNombre,SegundoNombre,PrimerApellido,SegundoApellido,Cedula,Edad,Telefono,Jornada,IdProyecto,EmpresaNit,AspnetusersId")] Usuario usuario)
         {
             if (id != usuario.IdUsuario)
             {
@@ -124,6 +128,7 @@ namespace ProyectoUME.Web.Controllers
             }
             ViewData["AspnetusersId"] = new SelectList(_context.Aspnetusers, "Id", "Id", usuario.AspnetusersId);
             ViewData["EmpresaNit"] = new SelectList(_context.Empresa, "Nit", "Ciudad", usuario.EmpresaNit);
+            ViewData["IdProyecto"] = new SelectList(_context.Proyecto, "IdProyecto", "DireccionPoyecto", usuario.IdProyecto);
             return View(usuario);
         }
 
@@ -138,6 +143,7 @@ namespace ProyectoUME.Web.Controllers
             var usuario = await _context.Usuario
                 .Include(u => u.Aspnetusers)
                 .Include(u => u.EmpresaNitNavigation)
+                .Include(u => u.IdProyectoNavigation)
                 .FirstOrDefaultAsync(m => m.IdUsuario == id);
             if (usuario == null)
             {

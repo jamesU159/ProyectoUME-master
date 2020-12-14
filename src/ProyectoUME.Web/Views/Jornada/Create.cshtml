@@ -14,6 +14,16 @@
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
+                <label asp-for="IdJornada" class="control-label"></label>
+                <input asp-for="IdJornada" class="form-control" />
+                <span asp-validation-for="IdJornada" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Jornada1" class="control-label"></label>
+                <input asp-for="Jornada1" class="form-control" />
+                <span asp-validation-for="Jornada1" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
         </form>

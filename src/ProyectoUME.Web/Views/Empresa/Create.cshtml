@@ -14,6 +14,11 @@
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
+                <label asp-for="Nit" class="control-label"></label>
+                <input asp-for="Nit" class="form-control" />
+                <span asp-validation-for="Nit" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 <label asp-for="NombreEmpresa" class="control-label"></label>
                 <input asp-for="NombreEmpresa" class="form-control" />
                 <span asp-validation-for="NombreEmpresa" class="text-danger"></span>

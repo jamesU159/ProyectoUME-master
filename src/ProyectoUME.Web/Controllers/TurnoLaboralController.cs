@@ -22,7 +22,7 @@ namespace ProyectoUME.Web.Controllers
         // GET: TurnoLaboral
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.TurnoLaboral.Include(t => t.JornadaIdJornadaNavigation);
+            var applicationDbContext = _context.TurnoLaboral.Include(t => t.IdUsuarioNavigation).Include(t => t.JornadaIdJornadaNavigation);
             return View(await applicationDbContext.ToListAsync());
         }
 
@@ -35,6 +35,7 @@ namespace ProyectoUME.Web.Controllers
             }
 
             var turnoLaboral = await _context.TurnoLaboral
+                .Include(t => t.IdUsuarioNavigation)
                 .Include(t => t.JornadaIdJornadaNavigation)
                 .FirstOrDefaultAsync(m => m.IdConsulta == id);
             if (turnoLaboral == null)
@@ -48,6 +49,7 @@ namespace ProyectoUME.Web.Controllers
         // GET: TurnoLaboral/Create
         public IActionResult Create()
         {
+            ViewData["IdUsuario"] = new SelectList(_context.Usuario, "IdUsuario", "PrimerApellido");
             ViewData["JornadaIdJornada"] = new SelectList(_context.Jornada, "IdJornada", "IdJornada");
             return View();
         }
@@ -57,7 +59,7 @@ namespace ProyectoUME.Web.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("IdConsulta,HoraIngreso,HoraSalida,JornadaIdJornada")] TurnoLaboral turnoLaboral)
+        public async Task<IActionResult> Create([Bind("IdConsulta,HoraIngreso,HoraSalida,JornadaIdJornada,IdUsuario")] TurnoLaboral turnoLaboral)
         {
             if (ModelState.IsValid)
             {
@@ -65,6 +67,7 @@ namespace ProyectoUME.Web.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["IdUsuario"] = new SelectList(_context.Usuario, "IdUsuario", "PrimerApellido", turnoLaboral.IdUsuario);
             ViewData["JornadaIdJornada"] = new SelectList(_context.Jornada, "IdJornada", "IdJornada", turnoLaboral.JornadaIdJornada);
             return View(turnoLaboral);
         }
@@ -82,6 +85,7 @@ namespace ProyectoUME.Web.Controllers
             {
                 return NotFound();
             }
+            ViewData["IdUsuario"] = new SelectList(_context.Usuario, "IdUsuario", "PrimerApellido", turnoLaboral.IdUsuario);
             ViewData["JornadaIdJornada"] = new SelectList(_context.Jornada, "IdJornada", "IdJornada", turnoLaboral.JornadaIdJornada);
             return View(turnoLaboral);
         }
@@ -91,7 +95,7 @@ namespace ProyectoUME.Web.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("IdConsulta,HoraIngreso,HoraSalida,JornadaIdJornada")] TurnoLaboral turnoLaboral)
+        public async Task<IActionResult> Edit(int id, [Bind("IdConsulta,HoraIngreso,HoraSalida,JornadaIdJornada,IdUsuario")] TurnoLaboral turnoLaboral)
         {
             if (id != turnoLaboral.IdConsulta)
             {
@@ -118,6 +122,7 @@ namespace ProyectoUME.Web.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["IdUsuario"] = new SelectList(_context.Usuario, "IdUsuario", "PrimerApellido", turnoLaboral.IdUsuario);
             ViewData["JornadaIdJornada"] = new SelectList(_context.Jornada, "IdJornada", "IdJornada", turnoLaboral.JornadaIdJornada);
             return View(turnoLaboral);
         }
@@ -131,6 +136,7 @@ namespace ProyectoUME.Web.Controllers
             }
 
             var turnoLaboral = await _context.TurnoLaboral
+                .Include(t => t.IdUsuarioNavigation)
                 .Include(t => t.JornadaIdJornadaNavigation)
                 .FirstOrDefaultAsync(m => m.IdConsulta == id);
             if (turnoLaboral == null)

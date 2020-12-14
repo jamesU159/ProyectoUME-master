@@ -7,7 +7,7 @@ namespace ProyectoUME.Core.Domain
     {
         public Proyecto()
         {
-            ListaEmpleados = new HashSet<ListaEmpleados>();
+            Usuario = new HashSet<Usuario>();
         }
 
         public int IdProyecto { get; set; }
@@ -15,6 +15,6 @@ namespace ProyectoUME.Core.Domain
         public string DireccionPoyecto { get; set; }
         public string PersonaResponsable { get; set; }
 
-        public virtual ICollection<ListaEmpleados> ListaEmpleados { get; set; }
+        public virtual ICollection<Usuario> Usuario { get; set; }
     }
 }

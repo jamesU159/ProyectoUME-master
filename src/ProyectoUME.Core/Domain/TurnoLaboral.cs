@@ -9,7 +9,9 @@ namespace ProyectoUME.Core.Domain
         public TimeSpan HoraIngreso { get; set; }
         public TimeSpan HoraSalida { get; set; }
         public int JornadaIdJornada { get; set; }
+        public int IdUsuario { get; set; }
 
+        public virtual Usuario IdUsuarioNavigation { get; set; }
         public virtual Jornada JornadaIdJornadaNavigation { get; set; }
     }
 }
